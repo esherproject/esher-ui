@@ -13,7 +13,7 @@ function _isTestnet() {
     const testnet =
         "39f5e2ede1f8bc1a3a54a7914414e3779e33193f1f5693510e73cb7a87617447"; // just for the record
     const mainnet =
-        "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8";
+        "dcf5584df4b8b0d5ab0112a2b6b72e2252863aa870575ffd82d44ae3da5fca0e";
 
     // treat every other chain as testnet
     return Apis.instance().chain_id !== mainnet;
@@ -42,10 +42,10 @@ export function getWalletURL() {
  */
 export function getFaucet() {
     return {
-        url: "https://faucet.bitshares.eu/onboarding", // 2017-12-infrastructure worker proposal
+        url: "https://faucet.eshercrypto.com", // 2017-12-infrastructure worker proposal
         show: true,
         editable: false,
-        referrer: "onboarding.bitshares.foundation"
+        referrer: "esherfaucet"
     };
 }
 
@@ -72,7 +72,7 @@ export function getLogo() {
  */
 export function getDefaultTheme() {
     // possible ["darkTheme", "lightTheme", "midnightTheme"]
-    return "darkTheme";
+    return "midnightTheme";
 }
 
 /**
@@ -93,14 +93,15 @@ export function getUnits() {
     if (_isTestnet()) {
         return ["TEST"];
     }
-    return ["BTS", "USD", "CNY", "BTC", "EUR", "GBP"];
+    // return ["BTS", "USD", "CNY", "BTC", "EUR", "GBP"];
+    return ["ESH"];
 }
 
 export function getDefaultMarket() {
     if (_isTestnet()) {
         return "USD_TEST";
     }
-    return "BTS_CNY";
+    return "ESH_USD";
 }
 
 /**
@@ -112,7 +113,8 @@ export function getMyMarketsBases() {
     if (_isTestnet()) {
         return ["TEST"];
     }
-    return ["BTS", "BTC", "CNY", "USD", "USDT", "ETH"];
+    // return ["BTS", "BTC", "CNY", "USD", "USDT", "ETH"];
+    return ["ESH"];
 }
 
 /**
