@@ -3,7 +3,7 @@ name: Build & deploy web wallet
 
 on:
     push:
-        branches: [develop, staging, master]
+        branches: [rebrand]
 
 jobs:
     build:
@@ -18,7 +18,7 @@ jobs:
             - run: corepack enable
             - run: yarn install --network-concurrency 1 --frozen-lockfile
             - run: yarn run build-hash
-            - uses: actions/upload-artifact@v3
+            - uses: actions/upload-artifact@v4
               with:
                   name: build-hash-binaries
                   path: build/hash-history
@@ -30,22 +30,18 @@ jobs:
             name: ${{ github.ref_name }}
 
         steps:
-            - uses: actions/download-artifact@v3
+            - uses: actions/download-artifact@v4
               with:
                   name: build-hash-binaries
                   path: build/hash-history
-            - name: Create CNAME file
-              uses: finnp/create-file-action@master
-              env:
-                  FILE_NAME: build/hash-history/CNAME
-                  FILE_DATA: ${{ secrets.DEPLOYMENT_URL }}
-            - name: Push to target repository
+            - name: Extract branch name
+              shell: bash
+              run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+              id: extract_branch
+            - name: Deploy
               uses: s0/git-publish-subdir-action@master
               env:
-                  REPO:
-                      git@github.com:bitshares/${{ secrets.DEPLOYMENT_REPOSITORY }}.git
-                  BRANCH: master
+                  REPO: self
+                  BRANCH: ${{ steps.extract_branch.outputs.branch }}-dist
                   FOLDER: build/hash-history
-                  SSH_PRIVATE_KEY: ${{ secrets.DEPLOYMENT_KEY }}
-                  MESSAGE:
-                      Automatic build of commit https://github.com/bitshares/bitshares-ui/commit/${{ github.sha }}
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

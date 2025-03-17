@@ -282,7 +282,7 @@ class ImportKeys extends Component {
                 pubkey
             ).toAddressString();
             let addresses = account_addresses[account_name] || [];
-            address = "BTS" + address.substring(3);
+            address = "ESHER" + address.substring(3);
             //DEBUG console.log("... address",address,account_name)
             addresses.push(address);
             account_addresses[account_name] = addresses;
@@ -405,9 +405,7 @@ class ImportKeys extends Component {
         let format_error1_once = true;
         for (let account of this.state.account_keys) {
             if (!account.encrypted_private_keys) {
-                let error = `Account ${
-                    account.account_name
-                } missing encrypted_private_keys`;
+                let error = `Account ${account.account_name} missing encrypted_private_keys`;
                 console.error(error);
                 if (format_error1_once) {
                     Notification.error({
@@ -1026,18 +1024,15 @@ class ImportKeys extends Component {
     }
 }
 
-ImportKeys = connect(
-    ImportKeys,
-    {
-        listenTo() {
-            return [ImportKeysStore];
-        },
-        getProps() {
-            return {
-                importing: ImportKeysStore.getState().importing
-            };
-        }
+ImportKeys = connect(ImportKeys, {
+    listenTo() {
+        return [ImportKeysStore];
+    },
+    getProps() {
+        return {
+            importing: ImportKeysStore.getState().importing
+        };
     }
-);
+});
 
 export default ImportKeys;
