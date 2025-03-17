@@ -39,7 +39,7 @@ jobs:
             - name: Deploy to wallet.eshercrypto.com
               uses: s0/git-publish-subdir-action@master
               env:
-                  REPO: esherproject/wallet.eshercrypto.com
+                  REPO: https://github.com/esherproject/wallet.eshercrypto.com.git
                   BRANCH: ${{ env.branch_name }}-dist
                   FOLDER: build/hash-history
                   GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
