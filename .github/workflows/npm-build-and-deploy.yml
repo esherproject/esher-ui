@@ -1,4 +1,3 @@
-# This workflow will do a clean install of node dependencies, build the source code and push the binaries to the deployment repository.
 name: Build & deploy web wallet
 
 on:
@@ -36,12 +35,11 @@ jobs:
                   path: build/hash-history
             - name: Extract branch name
               shell: bash
-              run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-              id: extract_branch
-            - name: Deploy
+              run: echo "branch_name=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+            - name: Deploy to wallet.eshercrypto.com
               uses: s0/git-publish-subdir-action@master
               env:
-                  REPO: self
-                  BRANCH: ${{ steps.extract_branch.outputs.branch }}-dist
+                  REPO: esherproject/wallet.eshercrypto.com
+                  BRANCH: ${{ env.branch_name }}-dist
                   FOLDER: build/hash-history
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
