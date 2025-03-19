@@ -19,33 +19,33 @@ var __VERSION__ =
 // BASE APP DIR
 var root_dir = path.resolve(__dirname);
 
-module.exports = function(env) {
+module.exports = function (env) {
     // STYLE LOADERS
     var cssLoaders = [
         {
-            loader: "style-loader"
+            loader: "style-loader",
         },
         {
-            loader: "css-loader"
+            loader: "css-loader",
         },
         {
-            loader: "postcss-loader"
-        }
+            loader: "postcss-loader",
+        },
     ];
 
     var scssLoaders = [
         {
-            loader: "style-loader"
+            loader: "style-loader",
         },
         {
-            loader: "css-loader"
+            loader: "css-loader",
         },
         {
-            loader: "postcss-loader"
+            loader: "postcss-loader",
         },
         {
-            loader: "sass-loader"
-        }
+            loader: "sass-loader",
+        },
     ];
 
     // OUTPUT PATH
@@ -55,10 +55,10 @@ module.exports = function(env) {
     const baseUrl = env.electron
         ? "./"
         : "baseUrl" in env
-        ? env.baseUrl === "false"
-            ? ""
-            : env.baseUrl
-        : "/";
+          ? env.baseUrl === "false"
+              ? ""
+              : env.baseUrl
+          : "/";
 
     /*
      * moment and react-intl include tons of locale files, use a regex and
@@ -76,8 +76,8 @@ module.exports = function(env) {
                 title: "Esher " + __VERSION__,
                 INCLUDE_BASE: !!env.prod && !env.hash,
                 PRODUCTION: !!env.prod,
-                ELECTRON: !!env.electron
-            }
+                ELECTRON: !!env.electron,
+            },
         }),
 
         new webpack.DefinePlugin({
@@ -90,47 +90,47 @@ module.exports = function(env) {
             __DEPRECATED__: !!env.deprecated,
             DEFAULT_SYMBOL: "ESH",
             __GIT_BRANCH__: JSON.stringify(git.branch()),
-            __PERFORMANCE_DEVTOOL__: !!env.perf_dev
+            __PERFORMANCE_DEVTOOL__: !!env.perf_dev,
         }),
         new webpack.ContextReplacementPlugin(
             /moment[\/\\]locale$/,
-            localeRegex
+            localeRegex,
         ),
         new webpack.ContextReplacementPlugin(
             /react-intl[\/\\]locale-data$/,
-            localeRegex
+            localeRegex,
         ),
         new CopyWebpackPlugin({
             patterns: [
                 {
                     from: path.join(root_dir, "charting_library"),
-                    to: "charting_library"
-                }
-            ]
+                    to: "charting_library",
+                },
+            ],
         }),
         new webpack.ProvidePlugin({
-            Buffer: ["buffer", "Buffer"]
+            Buffer: ["buffer", "Buffer"],
         }),
         new webpack.ProvidePlugin({
-            process: ["process", "process"]
-        })
+            process: ["process", "process"],
+        }),
     ];
     if (env.prod) {
         // PROD OUTPUT PATH
         let outputDir = env.electron
             ? "electron"
             : env.hash
-            ? !baseUrl
-                ? "hash-history"
-                : `hash-history_${baseUrl.replace("/", "")}`
-            : "dist";
+              ? !baseUrl
+                  ? "hash-history"
+                  : `hash-history_${baseUrl.replace("/", "")}`
+              : "dist";
         outputPath = path.join(root_dir, "build", outputDir);
 
         // WRAP INTO CSS FILE
         cssLoaders = [
             {loader: MiniCssExtractPlugin.loader},
             {loader: "css-loader"},
-            {loader: "postcss-loader"}
+            {loader: "postcss-loader"},
         ];
         scssLoaders = [
             {loader: MiniCssExtractPlugin.loader},
@@ -138,28 +138,28 @@ module.exports = function(env) {
             {loader: "postcss-loader"},
             {
                 loader: "sass-loader",
-                options: {sassOptions: {outputStyle: "expanded"}}
-            }
+                options: {sassOptions: {outputStyle: "expanded"}},
+            },
         ];
 
         // PROD PLUGINS
         plugins.push(
             new webpack.DefinePlugin({
                 "process.env": {NODE_ENV: JSON.stringify("production")},
-                __DEV__: false
-            })
+                __DEV__: false,
+            }),
         );
         plugins.push(
             new MiniCssExtractPlugin({
-                filename: "[name].[contenthash].css"
-            })
+                filename: "[name].[contenthash].css",
+            }),
         );
     } else {
         plugins.push(
             new webpack.DefinePlugin({
                 "process.env": {NODE_ENV: JSON.stringify("development")},
-                __DEV__: true
-            })
+                __DEV__: true,
+            }),
         );
         plugins.push(new webpack.HotModuleReplacementPlugin());
     }
@@ -172,10 +172,10 @@ module.exports = function(env) {
                         path
                             .join(root_dir, "app", "assets", "locales")
                             .replace(/\\/g, "/"),
-                        "*.json"
+                        "*.json",
                     ),
                     to: path.join(outputPath, "[name][ext]"),
-                    toType: "template"
+                    toType: "template",
                 },
                 {
                     from: path.join(
@@ -183,23 +183,23 @@ module.exports = function(env) {
                         "app",
                         "lib",
                         "common",
-                        "dictionary_en.json"
+                        "dictionary_en.json",
                     ),
                     to: path.join(outputPath, "dictionary.json"),
-                    toType: "file"
+                    toType: "file",
                 },
                 {
                     from: path.join(
                         root_dir,
                         "app",
                         "assets",
-                        "outdated_browser.css"
+                        "outdated_browser.css",
                     ),
                     to: path.join(outputPath, "outdated_browser.css"),
-                    toType: "file"
-                }
-            ]
-        })
+                    toType: "file",
+                },
+            ],
+        }),
     );
 
     /* Workaround in which the github pages server will find a file when it looks
@@ -217,17 +217,17 @@ module.exports = function(env) {
                             "components",
                             "DepositWithdraw",
                             "blocktrades",
-                            "index.html"
+                            "index.html",
                         ),
                         to: path.join(
                             outputPath,
                             "deposit-withdraw",
-                            "index.html"
+                            "index.html",
                         ),
-                        toType: "file"
-                    }
-                ]
-            })
+                        toType: "file",
+                    },
+                ],
+            }),
         );
     var alias = {
         sanitize$: "xss",
@@ -235,19 +235,19 @@ module.exports = function(env) {
         bitsharesjs$: path.resolve(root_dir, "node_modules/bitsharesjs/"),
         "bitshares-ui-style-guide$": path.resolve(
             root_dir,
-            "node_modules/bitshares-ui-style-guide/dist/main.js"
-        )
+            "node_modules/bitshares-ui-style-guide/dist/main.js",
+        ),
     };
     if (!env.prod) {
         alias = Object.assign({}, alias, {
-            "react-dom": "@hot-loader/react-dom"
+            "react-dom": "@hot-loader/react-dom",
         });
     }
     var https = false;
     if (env.https) {
         https = {
             key: fs.readFileSync("./ssl/server.key"),
-            cert: fs.readFileSync("./ssl/server.crt")
+            cert: fs.readFileSync("./ssl/server.crt"),
         };
     }
     var config = {
@@ -257,8 +257,8 @@ module.exports = function(env) {
                 ? path.resolve(root_dir, "app/Main.js")
                 : [
                       "react-hot-loader/patch",
-                      path.resolve(root_dir, "app/Main.js")
-                  ]
+                      path.resolve(root_dir, "app/Main.js"),
+                  ],
         },
         output: {
             publicPath: env.prod ? "" : "/",
@@ -268,21 +268,22 @@ module.exports = function(env) {
             pathinfo: !env.prod,
             sourceMapFilename: "[name].js.map",
             globalObject: "this",
-            clean: true
+            clean: true,
         },
         devServer: {
             hot: true,
             static: {
                 directory: path.join(__dirname, "app/assets/locales"),
-                publicPath: env.prod ? "" : "/"
+                publicPath: env.prod ? "" : "/",
             },
             historyApiFallback: true,
             https: https,
             devMiddleware: {
                 index: true,
                 mimeTypes: {phtml: "text/html"},
-                publicPath: env.prod ? "" : "/"
-            }
+                publicPath: env.prod ? "" : "/",
+            },
+            allowedHosts: "all",
         },
         optimization: {
             splitChunks: {
@@ -291,16 +292,16 @@ module.exports = function(env) {
                         name: "styles",
                         test: /\.css$/,
                         chunks: "all",
-                        enforce: true
+                        enforce: true,
                     },
                     vendor: {
                         name: "vendor",
                         test: /node_modules/,
                         chunks: "initial",
-                        enforce: true
-                    }
-                }
-            }
+                        enforce: true,
+                    },
+                },
+            },
         },
         devtool:
             env.noUgly || !env.prod
@@ -312,7 +313,7 @@ module.exports = function(env) {
                     // Test for a polyfill (or any file) and it won't be included in your
                     // bundle
                     test: /node-fetch/,
-                    use: "null-loader"
+                    use: "null-loader",
                 },
                 {
                     test: /\.jsx$/,
@@ -320,8 +321,8 @@ module.exports = function(env) {
                         path.join(root_dir, "app"),
                         path.join(
                             root_dir,
-                            "node_modules/react-foundation-apps"
-                        )
+                            "node_modules/react-foundation-apps",
+                        ),
                     ],
                     use: [
                         {
@@ -330,21 +331,21 @@ module.exports = function(env) {
                                 presets: [
                                     [
                                         "@babel/preset-react",
-                                        {targets: {node: "current"}}
-                                    ]
+                                        {targets: {node: "current"}},
+                                    ],
                                 ],
                                 cacheDirectory: env.prod ? false : true,
-                                plugins: ["react-hot-loader/babel"]
-                            }
-                        }
-                    ]
+                                plugins: ["react-hot-loader/babel"],
+                            },
+                        },
+                    ],
                 },
                 {
                     test: /\.js$/,
                     include: [
                         path.join(root_dir, "app"),
                         path.join(root_dir, "node_modules/alt-container"),
-                        path.join(root_dir, "node_modules/alt-react")
+                        path.join(root_dir, "node_modules/alt-react"),
                     ],
                     use: [
                         {
@@ -356,33 +357,33 @@ module.exports = function(env) {
                                 presets: [
                                     [
                                         "@babel/preset-react",
-                                        {targets: {node: "current"}}
-                                    ]
-                                ]
-                            }
-                        }
-                    ]
+                                        {targets: {node: "current"}},
+                                    ],
+                                ],
+                            },
+                        },
+                    ],
                 },
                 {
                     test: /\.mjs$/,
                     include: /node_modules/,
-                    type: "javascript/auto"
+                    type: "javascript/auto",
                 },
                 {test: /\.coffee$/, loader: "coffee-loader"},
                 {
                     test: /\.(coffee\.md|litcoffee)$/,
                     loader: "coffee-loader",
                     options: {
-                        literate: true
-                    }
+                        literate: true,
+                    },
                 },
                 {
                     test: /\.css$/,
-                    use: cssLoaders
+                    use: cssLoaders,
                 },
                 {
                     test: /\.scss$/,
-                    use: scssLoaders
+                    use: scssLoaders,
                 },
                 {
                     test: /\.png$/,
@@ -390,17 +391,17 @@ module.exports = function(env) {
                         path.resolve(root_dir, "app/assets/asset-symbols"),
                         path.resolve(
                             root_dir,
-                            "app/assets/language-dropdown/img"
-                        )
+                            "app/assets/language-dropdown/img",
+                        ),
                     ],
                     use: [
                         {
                             loader: "url-loader",
                             options: {
-                                limit: 100000
-                            }
-                        }
-                    ]
+                                limit: 100000,
+                            },
+                        },
+                    ],
                 },
 
                 {
@@ -410,20 +411,20 @@ module.exports = function(env) {
                             loader: "url-loader",
                             options: {
                                 limit: 100000,
-                                mimetype: "application/font-woff"
-                            }
-                        }
-                    ]
+                                mimetype: "application/font-woff",
+                            },
+                        },
+                    ],
                 },
                 {
                     test: /.*\.svg$/,
                     exclude: [
                         path.resolve(root_dir, "app/assets/model-type-images"),
-                        path.resolve(root_dir, "app/assets/bin-file")
+                        path.resolve(root_dir, "app/assets/bin-file"),
                     ],
                     use: [
                         {
-                            loader: "svg-inline-loader"
+                            loader: "svg-inline-loader",
                         },
                         {
                             loader: "svgo-loader",
@@ -432,32 +433,32 @@ module.exports = function(env) {
                                     {name: "cleanupAttrs", active: true},
                                     {name: "removeMetadata", active: true},
                                     {name: "removeXMLNS", active: true},
-                                    {name: "removeViewBox", active: false}
-                                ]
-                            }
-                        }
-                    ]
+                                    {name: "removeViewBox", active: false},
+                                ],
+                            },
+                        },
+                    ],
                 },
                 {
                     test: /\.md/,
                     use: [
                         {
                             loader: "html-loader",
-                            options: {sources: false}
+                            options: {sources: false},
                         },
                         {
                             loader: "markdown-loader",
-                            options: {}
-                        }
-                    ]
-                }
-            ]
+                            options: {},
+                        },
+                    ],
+                },
+            ],
         },
         resolve: {
             modules: [
                 path.resolve(root_dir, "app"),
                 path.resolve(root_dir, "app/lib"),
-                "node_modules"
+                "node_modules",
             ],
             extensions: [".js", ".jsx", ".coffee", ".json"],
             mainFields: ["module", "jsnext:main", "browser", "main"],
@@ -467,10 +468,10 @@ module.exports = function(env) {
                 constants: require.resolve("constants-browserify"),
                 stream: require.resolve("stream-browserify"),
                 path: require.resolve("path-browserify"),
-                buffer: require.resolve("buffer")
-            }
+                buffer: require.resolve("buffer"),
+            },
         },
-        plugins: plugins
+        plugins: plugins,
     };
 
     return config;
