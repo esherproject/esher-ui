@@ -49,7 +49,7 @@ class FeaturedMarkets extends React.Component {
     _getMarkets(state = this.state, props = this.props) {
         const {chainID} = state;
 
-        if (chainID === "ea709804") {
+        if (chainID === "4018d784") {
             return props.markets;
         } else {
             // assume testnet
