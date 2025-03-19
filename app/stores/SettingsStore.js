@@ -469,7 +469,7 @@ class SettingsStore {
             let coreAssets = {
                 markets_4018d784: "BTS",
                 markets_39f5e2ed: "TEST",
-                markets_dcf5584d: "ESH"
+                markets_ea709804: "ESH"
             };
             let coreAsset = coreAssets[this.starredKey] || "ESH";
             /*
