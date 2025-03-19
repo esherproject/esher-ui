@@ -353,7 +353,7 @@ class Header extends React.Component {
             !!a &&
             Apis.instance() &&
             Apis.instance().chain_id &&
-            Apis.instance().chain_id.substr(0, 8) === "4018d784";
+            Apis.instance().chain_id.substr(0, 8) === "ea709804";
 
         if (starredAccounts.size) {
             for (let i = tradingAccounts.length - 1; i >= 0; i--) {
@@ -742,44 +742,41 @@ class Header extends React.Component {
     }
 }
 
-Header = connect(
-    Header,
-    {
-        listenTo() {
-            return [
-                AccountStore,
-                WalletUnlockStore,
-                WalletManagerStore,
-                SettingsStore,
-                GatewayStore
-            ];
-        },
-        getProps() {
-            const chainID = Apis.instance().chain_id;
-            return {
-                backedCoins: GatewayStore.getState().backedCoins,
-                myActiveAccounts: AccountStore.getState().myActiveAccounts,
-                currentAccount:
-                    AccountStore.getState().currentAccount ||
-                    AccountStore.getState().passwordAccount,
-                passwordAccount: AccountStore.getState().passwordAccount,
-                locked: WalletUnlockStore.getState().locked,
-                current_wallet: WalletManagerStore.getState().current_wallet,
-                lastMarket: SettingsStore.getState().viewSettings.get(
-                    `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
-                ),
-                starredAccounts: AccountStore.getState().starredAccounts,
-                passwordLogin: SettingsStore.getState().settings.get(
-                    "passwordLogin"
-                ),
-                currentLocale: SettingsStore.getState().settings.get("locale"),
-                hiddenAssets: SettingsStore.getState().hiddenAssets,
-                settings: SettingsStore.getState().settings,
-                locales: SettingsStore.getState().defaults.locale,
-                contacts: AccountStore.getState().accountContacts
-            };
-        }
+Header = connect(Header, {
+    listenTo() {
+        return [
+            AccountStore,
+            WalletUnlockStore,
+            WalletManagerStore,
+            SettingsStore,
+            GatewayStore
+        ];
+    },
+    getProps() {
+        const chainID = Apis.instance().chain_id;
+        return {
+            backedCoins: GatewayStore.getState().backedCoins,
+            myActiveAccounts: AccountStore.getState().myActiveAccounts,
+            currentAccount:
+                AccountStore.getState().currentAccount ||
+                AccountStore.getState().passwordAccount,
+            passwordAccount: AccountStore.getState().passwordAccount,
+            locked: WalletUnlockStore.getState().locked,
+            current_wallet: WalletManagerStore.getState().current_wallet,
+            lastMarket: SettingsStore.getState().viewSettings.get(
+                `lastMarket${chainID ? "_" + chainID.substr(0, 8) : ""}`
+            ),
+            starredAccounts: AccountStore.getState().starredAccounts,
+            passwordLogin: SettingsStore.getState().settings.get(
+                "passwordLogin"
+            ),
+            currentLocale: SettingsStore.getState().settings.get("locale"),
+            hiddenAssets: SettingsStore.getState().hiddenAssets,
+            settings: SettingsStore.getState().settings,
+            locales: SettingsStore.getState().defaults.locale,
+            contacts: AccountStore.getState().accountContacts
+        };
     }
-);
+});
 
 export default withRouter(Header);
