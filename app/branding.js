@@ -114,7 +114,7 @@ export function getMyMarketsBases() {
         return ["TEST"];
     }
     // return ["ESH", "BTC", "USD", "IDR", "EUR", "YEN"];
-    return ["ESH"];
+    return ["ESH", "USD"];
 }
 
 /**
@@ -127,7 +127,7 @@ export function getMyMarketsQuotes() {
         return ["TEST"];
     }
     let tokens = {
-        nativeTokens: ["ESH"],
+        nativeTokens: ["ESH", "USD", "IDR"],
         gdexTokens: [],
         openledgerTokens: [],
         rudexTokens: [],

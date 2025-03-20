@@ -5,7 +5,7 @@ require("file-loader?name=asset-symbols/[name].png!./unknown.png");
 require("file-loader?name=asset-symbols/[name].png!./esh.png");
 
 // BitAssets
-// require("file-loader?name=asset-symbols/[name].png!./usd.png");
+require("file-loader?name=asset-symbols/[name].png!./usd.png");
 // require("file-loader?name=asset-symbols/[name].png!./eur.png");
 // require("file-loader?name=asset-symbols/[name].png!./cny.png");
 // require("file-loader?name=asset-symbols/[name].png!./gold.png");
