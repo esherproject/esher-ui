@@ -488,6 +488,11 @@
         "view_mode": "View Mode",
         "you_are_in_browsing_mode": "You're in view only mode of the current account. Click here to get back to your account."
     },
+    "accountObj": {
+        "perm": {
+            "cancel": "Cancel"
+        }
+    },
     "alert": {
         "warning": "Warning"
     },
