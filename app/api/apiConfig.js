@@ -137,7 +137,7 @@ export const settingsAPIs = {
             location: "Locally hosted"
         },
         {
-            url: "wss://rpc.eshercrypto.com",
+            url: "wss://node.eshercrypto.com",
             region: "South East Asia",
             country: "Singapore",
             location: "Singapore",
