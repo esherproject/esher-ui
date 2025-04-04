@@ -450,7 +450,7 @@ class SettingsStore {
             this.basesKey = this._getChainKey("preferredBases");
             // Default markets setup
             let topMarkets = {
-                markets_9400e5da: getMyMarketsQuotes(),
+                markets_8bc64d64: getMyMarketsQuotes(),
                 markets_39f5e2ed: [
                     // TESTNET
                     "PEG.FAKEUSD",
@@ -459,7 +459,7 @@ class SettingsStore {
             };
 
             let bases = {
-                markets_9400e5da: getMyMarketsBases(),
+                markets_8bc64d64: getMyMarketsBases(),
                 markets_39f5e2ed: [
                     // TESTNET
                     "TEST"
@@ -469,7 +469,7 @@ class SettingsStore {
             let coreAssets = {
                 markets_4018d784: "BTS",
                 markets_39f5e2ed: "TEST",
-                markets_9400e5da: "ESH"
+                markets_8bc64d64: "ESH"
             };
             let coreAsset = coreAssets[this.starredKey] || "ESH";
             /*
@@ -479,7 +479,7 @@ class SettingsStore {
             this.onUpdateUnits();
             this.defaults.unit[0] = coreAsset;
 
-            let defaultBases = bases[this.starredKey] || bases.markets_9400e5da;
+            let defaultBases = bases[this.starredKey] || bases.markets_8bc64d64;
             let storedBases = ss.get(this.basesKey, []);
             this.preferredBases = Immutable.List(
                 storedBases.length ? storedBases : defaultBases
@@ -689,7 +689,7 @@ class SettingsStore {
     }
 
     _getChainId() {
-        return (Apis.instance().chain_id || "9400e5da").substr(0, 8);
+        return (Apis.instance().chain_id || "8bc64d64").substr(0, 8);
     }
 
     _getChainKey(key) {
