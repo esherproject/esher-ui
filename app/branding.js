@@ -93,15 +93,15 @@ export function getUnits() {
     if (_isTestnet()) {
         return ["TEST"];
     }
-    // return ["ESH", "BTC", "USD", "IDR", "EUR", "YEN"];
+    // return ["ESH", "BTC", "USDT", "IDR", "EUR", "YEN"];
     return ["ESH"];
 }
 
 export function getDefaultMarket() {
     if (_isTestnet()) {
-        return "USD_TEST";
+        return "USDT_TEST";
     }
-    return "ESH_USD";
+    return "ESH_USDT";
 }
 
 /**
@@ -113,7 +113,7 @@ export function getMyMarketsBases() {
     if (_isTestnet()) {
         return ["TEST"];
     }
-    // return ["ESH", "BTC", "USD", "IDR", "EUR", "YEN"];
+    // return ["ESH", "BTC", "USDT", "IDR", "EUR", "YEN"];
     return ["ESH"];
 }
 
@@ -152,10 +152,10 @@ export function getMyMarketsQuotes() {
  */
 export function getFeaturedMarkets(quotes = []) {
     if (_isTestnet()) {
-        return [["USD", "TEST"]];
+        return [["USDT", "TEST"]];
     }
     return [
-        ["USD", "ESH"],
+        ["USDT", "ESH"],
         ["BTC", "ESH"]
     ].filter(a => {
         if (!quotes.length) return true;
